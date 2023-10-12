@@ -1,0 +1,3 @@
+[submodule "supra_seal"]
+	path = supra_seal
+	url = https://github.com/supranational/supra_seal.git
