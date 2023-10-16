@@ -38,7 +38,7 @@ mod libsupraseal {
             block_offset: usize,
             num_sectors: usize,
             sector_slot: usize,
-            replica_ids: *const u8,
+            replica_id: *const u8,
             seed: *const u8,
             ticket: *const u8,
             cache_path: *const c_char,
@@ -117,7 +117,7 @@ pub fn c1<P: AsRef<Path>>(
     block_offset: usize,
     num_sectors: usize,
     sector_slot: usize,
-    replica_ids: Vec<[u8; 32]>,
+    replica_id: [u8; 32],
     seed: [u8; 32],
     ticket: [u8; 32],
     cache_path: P,
@@ -125,8 +125,6 @@ pub fn c1<P: AsRef<Path>>(
     replica_path: P,
     sector_size: usize,
 ) -> u32 {
-    let replica_ids = replica_ids.into_iter().flatten().collect::<Vec<u8>>();
-
     let cache_path_c: CString = CString::new(cache_path.as_ref().as_os_str().as_bytes()).unwrap();
     let parents_filename_c =
         CString::new(parents_filename.as_ref().as_os_str().as_bytes()).unwrap();
@@ -138,7 +136,7 @@ pub fn c1<P: AsRef<Path>>(
             block_offset,
             num_sectors,
             sector_slot,
-            replica_ids.as_ptr(),
+            replica_id.as_ptr(),
             seed.as_ptr(),
             ticket.as_ptr(),
             cache_path_c.as_ptr(),
