@@ -125,6 +125,9 @@ fn main() {
     println!("cargo:rustc-link-lib=supraseal");
     println!("cargo:rustc-link-lib=gmp");
     println!("cargo:rustc-link-lib=config++");
+    // The --copy-dt-needed-entries -lstdc++ are helpful to get around some
+    // "DSO missing from command line" error
+    println!("cargo:rustc-link-arg=-Wl,--copy-dt-needed-entries");
     println!("cargo:rustc-link-lib=static:-bundle=stdc++");
 
     println!("cargo:rerun-if-changed={}", cpp_lib_dir.to_str().unwrap());
